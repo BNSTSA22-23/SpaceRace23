@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class player : MonoBehaviour
 {
+    private float jumpForce = 10f;
+    private Rigidbody2D rb;
+
     private float movementForce = 10f;
     private float movementX;
     // Start is called before the first frame update
@@ -29,7 +32,8 @@ public class player : MonoBehaviour
     void Awake()
     {
         anim = GetComponent<Animator>();
-        sr = GetComponent<SpriteRenderer>(); 
+        sr = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     void AnimatePlayer()
@@ -53,4 +57,16 @@ public class player : MonoBehaviour
     }
 
     private SpriteRenderer sr;
+    void FixedUpdate()
+    {
+        Jump();
+    }
+
+    void Jump()
+    {
+        if (Input.GetButtonDown("Jump"))
+        {
+            rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+        }
+    }
 }
